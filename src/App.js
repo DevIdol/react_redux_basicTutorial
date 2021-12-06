@@ -1,11 +1,9 @@
 import React, { createRef } from 'react'
 import { connect } from 'react-redux'
-
-const Item = ({ name, price }) => (
-  <li>
-    {name}, $ {price}
-  </li>
-)
+import Button from './components/Button'
+import InputForm from './components/InputForm'
+import Item from './components/Items'
+import { stateToProps, dispatchToProps } from './redux'
 
 const App = (props) => {
   let nameRef = createRef()
@@ -27,34 +25,10 @@ const App = (props) => {
           <Item key={i.id} name={i.name} price={i.price} />
         ))}
       </ul>
-      <label for="">Name: </label>
-      <input type="text" ref={nameRef} />
-      <br />
-      <br />
-      <label for="">Price: </label>
-      <input type="text" ref={priceRef} />
-      <br />
-      <br />
-      <button onClick={add} style={{ marginLeft: 100 }}>
-        {' '}
-        Add
-      </button>
+      <InputForm name={nameRef} price={priceRef} />
+      <Button click={add} />
     </div>
   )
-}
-
-const stateToProps = (state) => {
-  return {
-    items: state,
-  }
-}
-
-const dispatchToProps = (dispatch) => {
-  return {
-    add: (id, name, price) => {
-      dispatch({ type: 'ADD', item: { id, name, price } })
-    },
-  }
 }
 
 const ReduxApp = connect(stateToProps, dispatchToProps)(App)
